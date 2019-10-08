@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lottery</title>
+
+<style type="text/css">
+	body {
+		background-color: #dcffcf;
+		background-image: url("cube-675482_1920.jpg");
+		background-size: cover;
+	}
+	h2.unsorted_arr {
+		font-size: 45px;
+		position: relative;
+		top: 0px;
+  		-webkit-text-stroke-color: #FFFFFF;
+  		-webkit-text-stroke-width: 1.0px; 
+		color: #00CBFF; 
+	}
+	h2.sorted_arr {
+		position: relative;
+		bottom: 20px; 
+		font-size: 45px;
+		-webkit-text-stroke-color: #FFFFFF;
+  		-webkit-text-stroke-width: 1.0px; 
+		color: #FF3400;
+	}
+</style>
+</head>
+
+<body>
+<script language="javascript">
+var unsorted_num = "";
+var sorted_num = "";
+var quick_pic_five = []; 
+var i; 
+var j; 
+var lottery_num = [];
+var user_five_input = [];
+var right = 0;
+var user_lucky_num = "";
+
+// Create array with 5 random nums 1-48
+for (i = 0; i < 5; i++) {
+	lottery_num[i] = parseInt(Math.random() * 47 + 1);
+	quick_pic_five[i] = lottery_num[i];
+}
+// Added 6th "lucky" random num 1-18
+lottery_num.push(parseInt(Math.random() * 17 + 1));
+quick_pic_five.push(lottery_num[5]);
+// Filling text with array 
+for (i = 0; i < 6; i++) {
+	unsorted_num += lottery_num[i] + ", ";
+}
+// Sorting nums in array, least to greatest
+lottery_num.sort(function(a,b){return a-b}); 
+// Filling text with array, added space for formatting
+for (i = 0; i < 6; i++) {
+	sorted_num += lottery_num[i] + ", ";
+}
+// Function to obtain user input and calculate payout 
+function payout() {
+	var str = document.getElementById("user_five_nums").value;
+	user_five_input = str.split(" ");
+	var lucky = 0; 
+	var outcome = ""; 
+	for (i = 0; i < 5; i++){
+		for (j = 0; j < 5; j++) {
+			if (user_five_input[i] == quick_pic_five[j]) {
+				right++;
+				quick_pic_five[j] = -1;
+				break;
+			}
+		}
+	}
+	if (document.getElementById("user_lucky_num").value == quick_pic_five[5]){
+		lucky = 1; 
+		quick_pic_five[5] = -1;
+	}
+	if (right == 5 && lucky == 1){
+		outcome = "$7,000 a WEEK for LIFE";
+	} else if (right == 5 && lucky == 0){
+		outcome = "$25,000 a YEAR for LIFE!";
+	} else if (right == 4 && lucky == 1){
+		outcome = "$5,000";
+	} else if (right == 4 && lucky == 0){
+		outcome = "$200";
+	} else if (right == 3 && lucky == 1){
+		outcome = "$150";
+	} else if (right == 3 && lucky == 0){
+		outcome = "$20";
+	} else if (right == 2 && lucky == 1){
+		outcome = "$25";
+	} else if (right == 2 && lucky == 0){
+		outcome = "$3";
+	} else if (right == 1 && lucky == 1){
+		outcome = "$6";
+	} else if (right == 0 && lucky == 1){
+		outcome = "$4";
+	} else {
+		outcome = "$0";
+	}
+
+
+	document.getElementById("output").innerHTML = outcome;  
+}
+// Function to hide/reveal quickpicks
+function reveal() {
+	var temp = document.getElementById("quickpicks");
+	if (temp.style.visibility == "hidden") {
+    	temp.style.visibility = "visible";
+  	} else {
+    	temp.style.visibility = "hidden";
+  	}
+}
+
+</script>
+<center><h1 style="font-family: sans-serif; font-size: 48px; color: #FFFFFF">
+	Welcome to <i>Let's Get <span style="color: #0E6E00">Lucky</span></style></i>&nbsp!</h1> 
+<p style="color: #FFFFFF; position: relative; bottom: 25px">*Enter 5 digits and 
+	1 lucky number</p>
+<input type="text" id="user_five_nums" placeholder="Enter 5 digts" 
+	style="width: 150px; height: 50px; font-size: 18px; padding: 5px;">
+<input type="text" id="user_lucky_num" placeholder="Lucky Num" 
+	style="width: 120px; height: 50px; font-size: 18px; padding: 5px;"><br><br>
+<button onclick="payout()" style="cursor: pointer; padding: 5px 10px; 
+	background-color: #FFFFFF; color: #000000">Submit</button>
+<h2 style="color: #FFFFFF; font-family: sans-serif;">YOU WIN: </h2>
+<p id="output" style="color: #FFFFFF"></p>
+
+<button onclick="reveal()" style="color: #000000; padding: 5px 28px; 
+	cursor: pointer; font-size: 20px; background-color: #FFFFFF; outline:0;">
+	Reveal Quick Pick</button>
+<div id="quickpicks" style="visibility: hidden;">
+<p style="position: relative; bottom: -15px; color: #FFFFFF; font-family: 
+	sans-serif; font-size: 24px"><b>Unsorted</b></p>
+<h2 class="unsorted_arr" style="position: relative; top: -10px;">
+<script language="javascript">
+document.write(unsorted_num);
+</script> 
+</h2>
+<p style="position: relative; top: -15px; color: #FFFFFF; font-family: 
+	sans-serif; font-size: 24px"><b>Sorted</b></p>
+<h2 class="sorted_arr" style="position: relative; bottom: 40px;">
+<script language="javascript">
+document.write(sorted_num);
+</script> 
+</h2>
+<button value="Refresh Page" onClick="window.location.reload()" 
+	style="cursor: pointer; color: #00000; background-color: #FFFFFF; 
+	padding: 10px 28px; position: relative; bottom: 60px">RESTART</button>
+</div>
+
+</center>
+
+</body>
+</html>
+
+
+
+
+
